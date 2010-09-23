@@ -709,10 +709,10 @@ if ( !jQuery.support.submitBubbles ) {
 
 	jQuery.event.special.submit = {
 		setup: function( data, namespaces ) {
-			if ( this.nodeName.toLowerCase() !== "form" ) {
+			if ( !jQuery.nodeName( this, "form" ) ) {
 				jQuery.event.add(this, "click.specialSubmit", function( e ) {
 					// Accessing type property on VML elements fails on IE.
-					var elem = e.target, type = elem.nodeName.toLowerCase() === "input" ? elem.type : "";
+					var elem = e.target, type = jQuery.nodeName( elem, "input" ) ? elem.type : "";
 
 					if ( (type === "submit" || type === "image") && jQuery( elem ).closest("form").length ) {
 						e.liveFired = undefined;
@@ -722,7 +722,7 @@ if ( !jQuery.support.submitBubbles ) {
 	 
 				jQuery.event.add(this, "keypress.specialSubmit", function( e ) {
 					// Accessing type property on VML elements fails on IE.
-					var elem = e.target, type = elem.nodeName.toLowerCase() === "input" ? elem.type : "";
+					var elem = e.target, type = jQuery.nodeName( elem, "input" ) ? elem.type : "";
 
 					if ( (type === "text" || type === "password") && jQuery( elem ).closest("form").length && e.keyCode === 13 ) {
 						e.liveFired = undefined;
@@ -760,7 +760,7 @@ if ( !jQuery.support.changeBubbles ) {
 				}).join("-") :
 				"";
 
-		} else if ( elem.nodeName.toLowerCase() === "select" ) {
+		} else if ( jQuery.nodeName( elem, "select" ) ) {
 			val = elem.selectedIndex;
 		}
 
@@ -802,7 +802,7 @@ if ( !jQuery.support.changeBubbles ) {
 			click: function( e ) {
 				var elem = e.target, type = elem.type;
 
-				if ( type === "radio" || type === "checkbox" || elem.nodeName.toLowerCase() === "select" ) {
+				if ( type === "radio" || type === "checkbox" || jQuery.nodeName( elem, "select" ) ) {
 					return testChange.call( this, e );
 				}
 			},
@@ -812,7 +812,7 @@ if ( !jQuery.support.changeBubbles ) {
 			keydown: function( e ) {
 				var elem = e.target, type = elem.type;
 
-				if ( (e.keyCode === 13 && elem.nodeName.toLowerCase() !== "textarea") ||
+				if ( (e.keyCode === 13 && !jQuery.nodeName( elem, "textarea" )) ||
 					(e.keyCode === 32 && (type === "checkbox" || type === "radio")) ||
 					type === "select-multiple" ) {
 					return testChange.call( this, e );
