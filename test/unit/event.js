@@ -1302,7 +1302,10 @@ test("live with change", function(){
 			checkboxChange++;
 		}
 	checkbox.live("change", checkboxFunction);
-	
+
+	// test that special handlers do not blow up with VML elements (#7071)
+	jQuery('#oval').click().keydown();
+
 	// test click on select
 
 	// second click that changed it
